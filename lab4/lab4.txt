@@ -1,0 +1,151 @@
+/*
+    Programmer: Dai Tran
+    
+    Program Name: Lab4.cpp
+
+    Date: 03/05/2022
+
+    Version: 4.5
+
+    Description: Write a program which overloads fractions arithmetic operations for division. 
+                 And include the overloading operators which we did in the class like multiplication, comparison, insertion, and extraction operators.
+*/
+
+#include <iostream>
+
+class Fraction
+{
+private:
+    int num, denom;
+
+public:
+    Fraction()
+    {
+        num = 0;
+        denom = 1;
+    }
+
+    Fraction(int num, int denom)
+    {
+        this->num = num;
+        this->denom = denom;
+    }
+
+    void setNum(int num)
+    {
+        this->num = num;
+    }
+
+    void setDenom(int denom)
+    {
+        this->denom = denom;
+    }
+
+    int getNum()
+    {
+        return num;
+    }
+
+    int getDenom()
+    {
+        return denom;
+    }
+
+    //Overloading Operator for division
+    friend Fraction operator / (Fraction f1, Fraction f2)
+    {
+        Fraction divide;
+
+        divide.num = f1.num * f2.denom;
+
+        divide.denom = f1.denom * f2.num;
+
+        return divide;
+    }
+
+    //Overloading Operator for multiplication
+    friend Fraction operator * (Fraction f1, Fraction f2)
+    {
+        Fraction product;
+
+        product.num = f1.num * f2.num;
+
+        product.denom = f1.denom * f2.denom;
+
+        return product;
+    }
+
+    //Overloading Operator for extraction
+    friend std::ostream &operator << (std::ostream &output, const Fraction &F)
+    {
+        output << F.num << "/" << F.denom;
+
+        return output;
+    }
+
+    //Overloading Operator for insertion
+    friend std::istream &operator >> (std::istream &input, Fraction &F)
+    {
+        input >> F.num >> F.denom;
+
+        return input;
+    }
+
+    //Overloading Operator for comparison
+    bool operator == (const Fraction &right)
+    {
+        bool status;
+
+        if (denom * right.num == num * right.denom)
+        {
+            status = true;
+        }
+        else
+        {
+            status = false;
+        }
+
+        return status;
+    }
+};
+
+int main()
+{
+    Fraction f1, f2, product, divide;
+
+    //Computer ask user to input the fraction
+    std::cout << "Enter first fraction: ";
+
+    std::cin >> f1;
+
+    std::cout << "Enter second fraction: ";
+
+    std::cin >> f2;
+
+    //Show fraction to screen
+    std::cout << "\nFirst fraction: " << f1 << std::endl;
+
+    std::cout << "Second fraction: " << f2 << std::endl;
+
+    //Calculate product and division of two fraction
+    product = f1 * f2;
+
+    divide = f1 / f2;
+
+    //Show result
+    std::cout << std::endl << f1 << " * " << f2 << " = " << product << std::endl;
+
+    std::cout << f1 << " / " << f2 << " = " << divide << std::endl;
+
+    //Compare two fraction
+    if (f1 == f2)
+    {
+        std::cout << "\nFraction 1 is equal to fraction 2." << std::endl;
+    }
+    else
+    {
+        std::cout << "\nFraction 1 is not equal to fraction 2." << std::endl;
+    }
+
+    return 0;
+}
