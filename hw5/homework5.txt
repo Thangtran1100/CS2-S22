@@ -1,0 +1,130 @@
+/*
+    Programmer: Dai Tran
+    
+    Program Name: hw5.cpp
+
+    Date: 03/18/2022
+
+    Version: 5.4
+
+    Description: Design a linked list class to hold a series of integers. 
+                 The class should have member functions for appending (adding a node at the end of the list) and printing the nodes. 
+                 Adding to program with reverse() function
+                 Demonstrate the class with a driver program to test the member functions and display the result after calling each member function.
+*/
+
+//node.h
+#ifndef NODE_H
+#define NODE_H
+
+// declares ItemType to be an alias for the type int
+typedef int ItemType;
+struct Node
+{
+    ItemType data;
+
+    Node *next;
+};
+
+class LinkedList: public Node
+{
+private:
+    Node *head = nullptr;
+public:
+    void append(int);
+    void reverse();
+    void display();
+};
+
+#endif
+//end file
+
+//node.cpp
+#include <iostream>
+#include "node.h"
+
+void LinkedList::append(int value)
+{
+    Node *node = new Node;
+
+    node->data = value;
+
+    node->next = nullptr;
+
+    // empty list
+    if (head == nullptr)
+    {
+        head = node;
+    }
+    else
+    {
+        Node *curr = head;
+
+        // loop till the last node of the list
+        while (curr->next != nullptr)
+        {
+            curr = curr->next;
+        }
+
+        curr->next = node; // add node as the new last node
+    }
+}
+
+void LinkedList::reverse()
+{
+    //Create 3 pointers are current, previous and next pointers
+    Node *curr = head, *previous = NULL, *next = NULL;
+
+    while (curr != NULL)
+    {
+        //Store next node
+        next = curr->next;
+
+        //Reverse current node pointer
+        curr->next = previous;
+
+        previous = curr;
+
+        curr = next;
+    }
+
+    head = previous;
+}
+
+void LinkedList::display()
+{
+    Node *curr;
+
+    curr = head;
+
+    while (curr != NULL)
+    {
+        std::cout << curr->data << " ";
+
+        curr = curr->next;
+    }
+
+    std::cout << std::endl;
+}//end file
+
+//main.cpp
+#include "node.h"
+
+int main()
+{
+    LinkedList *node1 = new LinkedList;
+
+    node1->append(1);
+    node1->append(2);
+    node1->append(3);
+    node1->append(4);
+    node1->append(5);
+
+    node1->display();
+
+    node1->reverse();
+
+    node1->display();
+
+    return 0;
+}//end file
