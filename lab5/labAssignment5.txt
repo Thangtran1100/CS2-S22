@@ -1,0 +1,102 @@
+/*
+    Programmer: Dai Tran
+    
+    Program Name: Lab5.cpp
+
+    Date: 03/17/2022
+
+    Version: 4.5
+
+    Description: Design a linked list class to hold a series of integers. 
+                 The class should have member functions for appending (adding a node at the end of the list) and printing the nodes. 
+                 Demonstrate the class with a driver program to test the member functions and display the result after calling each member function.
+*/
+
+//node.h
+#ifndef NODE_H
+#define NODE_H
+
+// declares ItemType to be an alias for the type int
+typedef int ItemType;
+struct Node
+{
+    ItemType data;
+
+    Node *next;
+};
+
+class LinkedList: public Node
+{
+private:
+    Node *head = nullptr;
+public:
+    void append(int);
+    void display();
+};
+
+#endif
+//End file
+
+
+//node.cpp
+#include<iostream>
+#include "node.h"
+
+void LinkedList::append(int value)
+{
+    Node *node = new Node;
+
+    node->data = value;
+
+    node->next = nullptr;
+
+    if (head == nullptr)
+    {
+        // empty list
+        head = node;
+    }
+    else
+    {
+        Node *curr = head;
+
+        // loop till the last node of the list
+        while (curr->next != nullptr)
+        {
+            curr = curr->next;
+        }
+
+        curr->next = node; // add node as the new last node
+    }
+}
+
+void LinkedList::display()
+{
+	Node *curr;
+
+	curr = head;
+
+	while(curr != NULL)
+	{
+		std::cout << curr->data << std::endl;
+
+		curr = curr->next;
+	}
+}
+
+//main.cpp
+#include "node.h"
+
+int main()
+{
+    LinkedList *node1 = new LinkedList;
+
+    node1->append(1);
+    node1->append(2);
+    node1->append(3);
+    node1->append(4);
+    node1->append(5);
+
+    node1->display();
+
+    return 0;
+}//End file
