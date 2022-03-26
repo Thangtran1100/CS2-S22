@@ -8,6 +8,8 @@ struct Node
     ItemType data;
 
     Node *next;
+
+    
 };
 
 class LinkedList: public Node
@@ -15,13 +17,14 @@ class LinkedList: public Node
 private:
     Node *head = nullptr;
 public:
-    Node* createNode(int);
     void append(int);
     void reverse();
     void display();
-    void insert(Node **, Node *);
+    //void insertNode(Node *, int);
     //delete list
     ~LinkedList();
 };
+
+
 
 #endif

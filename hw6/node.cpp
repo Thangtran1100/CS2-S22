@@ -1,18 +1,6 @@
 #include <iostream>
 #include "node.h"
 
-//Create a new node
-Node* LinkedList::createNode(int import_data)
-{
-    Node* node = new Node();
- 
-    node->data = import_data;
-
-    node->next = nullptr;
- 
-    return node;
-}
-
 void LinkedList::append(int value)
 {
     Node *node = new Node;
@@ -75,33 +63,6 @@ void LinkedList::display()
     }
 
     std::cout << std::endl;
-}
-
-void LinkedList::insert(Node **head, Node *node)
-{
-    Node *current;
-
-    /* Special case for the head end */
-    if (*head == nullptr || (*head)->data >= node->data)
-    {
-        node->next = *head;
-
-        *head = node;
-    }
-    else
-    {
-        //Locate the node before the insertion 
-        current = *head;
-
-        while (current->next != nullptr && current->next->data < node->data)
-        {
-            current = current->next;
-        }
-
-        node->next = current->next;
-
-        current->next = node;
-    }
 }
 
 LinkedList::~LinkedList()
