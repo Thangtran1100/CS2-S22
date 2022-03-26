@@ -15,10 +15,11 @@ class LinkedList: public Node
 private:
     Node *head = nullptr;
 public:
+    Node* createNode(int);
     void append(int);
     void reverse();
     void display();
-    void insert();
+    void insert(Node **, Node *);
     //delete list
     ~LinkedList();
 };
