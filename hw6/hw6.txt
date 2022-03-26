@@ -1,3 +1,53 @@
+/*
+    Programmer: Dai Tran
+    
+    Program Name: hw6.cpp
+
+    Date: 03/25/2022
+
+    Version: 4.5
+
+    Description: Modify the linked list class you created before by adding member functions named inserting, and deleting nodes. 
+    The values in the linked list are already sorted in ascending order. 
+    The insert member function will insert the new value in the proper place in the linked list so the linked list would still be in ascending order. 
+    Don’t forget to add a destructor that destroys the list. 
+    Demonstrate the class with a driver program to test the member functions and display the result after calling each member function.
+*/
+
+//node.h
+#ifndef NODE_H
+#define NODE_H
+
+// declares ItemType to be an alias for the type int
+typedef int ItemType;
+struct Node
+{
+    ItemType data;
+
+    Node *next;
+
+    
+};
+
+class LinkedList: public Node
+{
+private:
+    Node *head = nullptr;
+public:
+    void append(int);
+    void reverse();
+    void display();
+    void inserting(int);
+    //delete list
+    ~LinkedList();
+};
+
+
+
+#endif
+//end file
+
+//node.cpp
 #include <iostream>
 #include "node.h"
 
@@ -126,3 +176,42 @@ LinkedList::~LinkedList()
         delete (temp);
     }
 }
+//end file
+
+//main.cpp
+#include<iostream>
+#include "node.h"
+
+int main()
+{
+    LinkedList *node1 = new LinkedList;
+
+    node1->append(2);
+    node1->append(4);
+    node1->append(8);
+    node1->append(10);
+    node1->append(20);
+
+    node1->display(); //2 4 8 10 20 
+
+    node1->inserting(5);
+
+    node1->display(); //2 4 5 8 10 20
+
+    node1->inserting(15);
+
+    node1->display(); //2 4 5 8 10 15 20
+
+    node1->inserting(9);
+
+    node1->display(); //2 4 5 8 9 10 15 20
+
+    node1->inserting(1);
+
+    node1->display(); //1 2 4 5 8 9 10 15 20
+
+    node1->~LinkedList();
+
+    return 0;
+}
+//end file

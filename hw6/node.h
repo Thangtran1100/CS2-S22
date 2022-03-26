@@ -20,7 +20,7 @@ public:
     void append(int);
     void reverse();
     void display();
-    //void insertNode(Node *, int);
+    void inserting(int);
     //delete list
     ~LinkedList();
 };
