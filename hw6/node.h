@@ -1,30 +1,27 @@
 #ifndef NODE_H
 #define NODE_H
 
-// declares ItemType to be an alias for the type int
-typedef int ItemType;
-struct Node
-{
-    ItemType data;
-
-    Node *next;
-
-    
-};
-
-class LinkedList: public Node
+template<typename Type>
+class LinkedList
 {
 private:
+    struct Node
+    {
+        Type data;
+
+        Node *next;
+    };
+
     Node *head = nullptr;
+
 public:
-    void append(int);
+    void create(Type[], Type);
+    void append(Type);
     void reverse();
     void display();
-    void inserting(int);
-    //delete list
+    void inserting(Type);
+    // delete list
     ~LinkedList();
 };
-
-
 
 #endif

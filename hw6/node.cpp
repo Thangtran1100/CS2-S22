@@ -1,7 +1,19 @@
 #include <iostream>
 #include "node.h"
 
-void LinkedList::append(int value)
+template class LinkedList<int>;
+
+template<typename Type>
+void LinkedList<Type>::create(Type A[], Type n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        append(A[i]);
+    }
+}
+
+template<typename Type>
+void LinkedList<Type>::append(Type value)
 {
     Node *node = new Node;
 
@@ -27,8 +39,8 @@ void LinkedList::append(int value)
         curr->next = node; // add node as the new last node
     }
 }
-
-void LinkedList::reverse()
+template<typename Type>
+void LinkedList<Type>::reverse()
 {
     // Create 3 pointers are current, previous and next pointers
     Node *curr = head, *previous = nullptr, *next = nullptr;
@@ -49,7 +61,8 @@ void LinkedList::reverse()
     head = previous;
 }
 
-void LinkedList::display()
+template<typename Type>
+void LinkedList<Type>::display()
 {
     Node *curr;
 
@@ -65,7 +78,8 @@ void LinkedList::display()
     std::cout << std::endl;
 }
 
-void LinkedList::inserting(int value)
+template<typename Type>
+void LinkedList<Type>::inserting(Type value)
 {
     Node *node = new Node;
 
@@ -83,7 +97,7 @@ void LinkedList::inserting(int value)
     {
         Node *temp = head;
 
-        // insert at head when value is greater than head
+        // insert at head when value is smaller than head
         if (temp->data > value)
         {
             node->next = head;
@@ -110,12 +124,13 @@ void LinkedList::inserting(int value)
         // insert at the end
         else
         {
-            temp->next = node;
+            //temp->next = node;
+            append(value);
         }
     }
 }
-
-LinkedList::~LinkedList()
+template<typename Type>
+LinkedList<Type>::~LinkedList()
 {
     while (head != nullptr)
     {

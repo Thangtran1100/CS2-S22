@@ -1,20 +1,48 @@
 #include<iostream>
 
-template<typename T>
-T square(T num)
+struct Node
 {
-    return num * num;
+    int data;
+
+    Node *next;
+};
+
+void append(Node *head, int value)
+{
+    Node *node = new Node;
+
+    node->data = value;
+
+    node->next = nullptr;
+
+    // empty list
+    if (head == nullptr)
+    {
+        head = node;
+    }
+    else
+    {
+        Node *curr = head;
+
+        // loop till the last node of the list
+        while (curr->next != nullptr)
+        {
+            curr = curr->next;
+        }
+
+        curr->next = node; // add node as the new last node
+    }
 }
 
 int main()
 {
-    int x =3;
+    Node *head = nullptr;
 
-    double y = 1.2;
+    Node *node1 = new Node;
 
-    std::cout << square(x) << std::endl;
+    Node *node2 = new Node;
 
-    std::cout << square(y) << std::endl;
+    Node *node3 = new Node;
 
 
 }
