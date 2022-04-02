@@ -2,36 +2,31 @@
 #define BALANCE_H
 
 #include<string>
-
-class CheckBalance
-{
+ 
+class Stack{
 private:
 	struct Node
 	{
 		char value;
 		Node *next;
 	};
-	
-	Node *top;  //Same as head pointer in linked list
-public:
-	CheckBalance()
-	{
-		top = NULL;
-	}
 
-	CheckBalance(char ch)
-	{
-		top->value= &ch;
-	}
-	
-	~CheckBalance(); // destructor
-	
+    Node* top;
+public:
+	//Default constructor
+    Stack();
+
+	//Destructor
+    ~Stack();
+
 	//Stack operations
-	void push(char);
-	void pop(char&);
-	bool isEmpty();
-	void display();
-	bool areBracketsBalanced(std::string);
+    void push(char x);
+    char pop();
+    bool isEmpty();
+    void display();
 };
+
+//check parentheses function
+bool isBalanced(char*);
 
 #endif

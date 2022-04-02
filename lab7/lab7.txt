@@ -1,0 +1,222 @@
+/*
+    Programmer: Dai Tran
+    
+    Program Name: lab7.cpp
+
+    Date: 03/26/2022
+
+    Version: 4.5
+
+    Description: A string of characters has balanced parentheses if each right parenthesis 
+                 occurring in the string is matched with a preceding left parentheses, in the same way that 
+                 each right brace in a C++ program is matched with a preceding left brace. 
+                 Write a program that uses a stack to determine whether a string entered at the keyboard has balanced parentheses.
+*/
+
+//balance.h
+#ifndef BALANCE_H
+#define BALANCE_H
+
+#include<string>
+ 
+class Stack{
+private:
+	struct Node
+	{
+		char value;
+		Node *next;
+	};
+
+    Node* top;
+public:
+	//Default constructor
+    Stack();
+
+	//Destructor
+    ~Stack();
+
+	//Stack operations
+    void push(char x);
+    char pop();
+    bool isEmpty();
+    void display();
+};
+
+//check parentheses function
+bool isBalanced(char*);
+
+#endif
+//end file
+
+//balance.cpp
+#include<iostream>
+#include "balance.h"
+#include<cstring>
+
+Stack::Stack() 
+{
+    top = nullptr;
+}
+ 
+Stack::~Stack() 
+{
+    Node* temp = top;
+
+    while (top)
+	{
+        top = top->next;
+
+        delete temp;
+
+        temp = top;
+    }
+}
+ 
+void Stack::push(char ch) 
+{
+    Node* temp = new Node;
+
+    if (temp == nullptr)
+	{
+        std::cout << "Stack Overflow" << std::endl;
+    } 
+	else 
+	{
+        temp->value = ch;
+
+        temp->next = top;
+
+        top = temp;
+    }
+}
+ 
+char Stack::pop() 
+{
+    Node* temp;
+
+    char ch = -1;
+
+    if (top == nullptr)
+	{
+        std::cout << "Stack Underflow" << std::endl;
+    } 
+	else 
+	{
+        temp = top;
+
+        ch = temp->value;
+
+        top = top->next;
+
+        delete temp;
+    }
+
+    return ch;
+}
+
+bool Stack::isEmpty()
+{
+	if(top == NULL)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void Stack::display()
+{
+	Node *curr = top;
+	
+	while(curr != NULL)
+	{
+		std::cout << curr->value << std::endl;
+		
+		curr = curr->next;
+	}
+}
+
+//check parentheses function
+bool isBalanced(char* exp)
+{
+    Stack stk;
+
+	//checking parentheses in stack stk
+    for (int i=0; i < strlen(exp); i++)
+	{
+        if (exp[i] == '(')
+		{
+            stk.push(exp[i]);
+        } 
+		
+		if (exp[i] == ')')
+		{
+            if (stk.isEmpty())
+			{
+                return false;
+            } 
+			else 
+			{
+                stk.pop();
+            }
+        }
+    }
+
+	if(stk.isEmpty())
+	{
+		return true; //return true if balance
+	}
+	else
+	{
+		return false; //return false if not balance
+	}
+}
+//end file
+
+//main.cpp
+#include<iostream>
+#include "balance.h"
+
+//Driver code
+int main()
+{
+	char E[] = "((a+b)*(c-d))";
+
+    if(isBalanced(E))
+	{
+		std::cout << "balanced" << std::endl;
+	}
+	else
+	{
+		std::cout << "not balanced" << std::endl;
+	}
+ 
+    char F[] = "((a+b)*(c-d)))";
+
+    if(isBalanced(F))
+	{
+		std::cout << "balanced" << std::endl;
+	}
+	else
+	{
+		std::cout << "not balanced" << std::endl;
+	}
+ 
+    char G[] = "(((a+b)*(c-d))";
+
+    if(isBalanced(G))
+	{
+		std::cout << "balanced" << std::endl;
+	}
+	else
+	{
+		std::cout << "not balanced" << std::endl;
+	}
+
+	
+	
+	return 0;
+}
+//end file

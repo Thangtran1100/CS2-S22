@@ -1,18 +1,42 @@
-// CPP program to check for balanced brackets.
+#include<iostream>
 #include "balance.h"
 
-// function to check if brackets are balanced
-
-
-// Driver code
 int main()
 {
-	string expr = "{()}[])";
+	char E[] = "((a+b)*(c-d))";
 
-	// Function call
-	if (areBracketsBalanced(expr))
-		cout << "Balanced";
+    if(isBalanced(E))
+	{
+		std::cout << "balanced" << std::endl;
+	}
 	else
-		cout << "Not Balanced";
+	{
+		std::cout << "not balanced" << std::endl;
+	}
+ 
+    char F[] = "((a+b)*(c-d)))";
+
+    if(isBalanced(F))
+	{
+		std::cout << "balanced" << std::endl;
+	}
+	else
+	{
+		std::cout << "not balanced" << std::endl;
+	}
+ 
+    char G[] = "(((a+b)*(c-d))";
+
+    if(isBalanced(G))
+	{
+		std::cout << "balanced" << std::endl;
+	}
+	else
+	{
+		std::cout << "not balanced" << std::endl;
+	}
+
+	
+	
 	return 0;
 }

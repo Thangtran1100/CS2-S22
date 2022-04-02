@@ -1,26 +1,69 @@
 #include<iostream>
 #include "balance.h"
+#include<cstring>
 
-void CheckBalance::pop(char &ch)
+Stack::Stack() 
 {
-	Node *temp;
-	if(isEmpty())
+    top = nullptr;
+}
+ 
+Stack::~Stack() 
+{
+    Node* temp = top;
+
+    while (top)
 	{
-		std::cout << "The stack is empty" << std::endl;
-	}
-	else
+        top = top->next;
+
+        delete temp;
+
+        temp = top;
+    }
+}
+ 
+void Stack::push(char ch) 
+{
+    Node* temp = new Node;
+
+    if (temp == nullptr)
 	{
-		ch = top->value;
-		
-		temp = top->next;
-		
-		delete top;
-		
-		top = temp;
-	}
+        std::cout << "Stack Overflow" << std::endl;
+    } 
+	else 
+	{
+        temp->value = ch;
+
+        temp->next = top;
+
+        top = temp;
+    }
+}
+ 
+char Stack::pop() 
+{
+    Node* temp;
+
+    char ch = -1;
+
+    if (top == nullptr)
+	{
+        std::cout << "Stack Underflow" << std::endl;
+    } 
+	else 
+	{
+        temp = top;
+
+        ch = temp->value;
+
+        top = top->next;
+
+        delete temp;
+    }
+
+    return ch;
 }
 
-bool CheckBalance::isEmpty()
+bool Stack::isEmpty()
 {
 	if(top == NULL)
 	{
@@ -32,27 +75,7 @@ bool CheckBalance::isEmpty()
 	}
 }
 
-void CheckBalance::push(char ch)
-{
-	Node *n = new Node;
-	
-	n->value = ch;
-	
-	if(isEmpty())
-	{
-		top = n;
-		
-		n->next = NULL;
-	}
-	else //insert new Node before top
-	{
-		n->next = top;
-		
-		top = n;
-	}
-}
-
-void CheckBalance::display()
+void Stack::display()
 {
 	Node *curr = top;
 	
@@ -64,58 +87,38 @@ void CheckBalance::display()
 	}
 }
 
-bool areBracketsBalanced(std::string expr)
+//check parentheses function
+bool isBalanced(char* exp)
 {
-	CheckBalance *s;
-	char x;
+    Stack stk;
 
-	// Traversing the Expression
-	for (int i = 0; i < expr.length(); i++)
+	//checking parentheses in stack stk
+    for (int i=0; i < strlen(exp); i++)
 	{
-		if (expr[i] == '(' || expr[i] == '['
-			|| expr[i] == '{')
+        if (exp[i] == '(')
 		{
-			// Push the element in the stack
-			s->push(expr[i]);
-			continue;
-		}
+            stk.push(exp[i]);
+        } 
+		
+		if (exp[i] == ')')
+		{
+            if (stk.isEmpty())
+			{
+                return false;
+            } 
+			else 
+			{
+                stk.pop();
+            }
+        }
+    }
 
-		// IF current current character is not opening
-		// bracket, then it must be closing. So stack
-		// cannot be empty at this point.
-		if (s->isEmpty())
-			return false;
-
-		switch (expr[i]) {
-		case ')':
-			
-			// Store the top element in a
-			x = s->CheckBalance(x);
-			s->pop();
-			if (x == '{' || x == '[')
-				return false;
-			break;
-
-		case '}':
-
-			// Store the top element in b
-			x = s.top();
-			s.pop();
-			if (x == '(' || x == '[')
-				return false;
-			break;
-
-		case ']':
-
-			// Store the top element in c
-			x = s.top();
-			s.pop();
-			if (x == '(' || x == '{')
-				return false;
-			break;
-		}
+	if(stk.isEmpty())
+	{
+		return true; //return true if balance
 	}
-
-	// Check Empty Stack
-	return (s.empty());
+	else
+	{
+		return false; //return false if not balance
+	}
 }
