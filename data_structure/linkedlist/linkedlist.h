@@ -1,7 +1,8 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
-class Linkedlist
+#include<iostream>
+class List
 {
 private:
     struct Node
@@ -11,6 +12,20 @@ private:
         Node *next;
     };
 
+    Node *head = NULL;
+public:
+    //Constructor
+    List()
+    {
+        head = NULL;
+    }
+
+    //Destructor
+    ~List();
+
+    //Function operator
+    void display();
+    void append(int);
 
 };
 #endif
