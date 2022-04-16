@@ -10,8 +10,8 @@ struct Node
 
 int main()
 {
-    
-
-
+    git add *.cpp *.h 
+git commit -m "update change"
+git push 
 }
 
