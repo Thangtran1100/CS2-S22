@@ -1,0 +1,186 @@
+/*
+    Programmer: Dai Tran
+    
+    Program Name: lab10.cpp
+
+    Date: 04/16/2022
+
+    Version: 4.5
+
+    Description: Write a class named TestScores. The class constructor should accept an array of test scores as its argument. 
+    The class should have a member function that returns the average of the test scores. 
+    If any test score in the array is negative or greater than 100, the class should throw an exception. 
+    Demonstrate the class in a program.
+*/
+
+***********************************************************************************************************************
+**
+
+//TestScore.h
+#ifndef TESTSCORE_H
+#define TESTSCORE_H
+
+const int SIZE = 2;
+
+class TestScore
+{
+private:
+    int testScore[2];
+
+public:
+    // Default constructor
+    TestScore();
+    // Constructor
+    TestScore(int[], int size = 2);
+    // Accessor function
+    float getAverage();
+};
+#endif
+
+//TestScore.cpp
+#include "TestScore.h"
+#include <iostream>
+#include <iomanip>
+#include "NegativeScore.h"
+#include "LargeScore.h"
+// Default Constructor
+TestScore::TestScore()
+{
+    testScore[0] = 0;
+    testScore[1] = 0;
+}
+
+// Constructor that accepts an array of test scores
+TestScore::TestScore(int score[], int size)
+{
+    for (int i = 0; i < size; i++)
+        testScore[i] = score[i];
+}
+
+// Get average and return it
+float TestScore::getAverage()
+{
+    float average = 0;
+    for (int i = 0; i < SIZE; i++)
+    {
+        if (testScore[i] < 0)
+        {
+            throw NegativeScore(testScore[i]);
+        }
+        else if (testScore[i] > 100)
+        {
+            throw LargeScore(testScore[i]);
+        }
+        else
+        {
+            average = average + testScore[i];
+        }
+    }
+    return average / SIZE;
+}
+
+//NegativeScore.h
+#ifndef NEGATIVESCORE_H
+#define NEGATIVESCORE_H
+#include <exception>
+using namespace std;
+
+class NegativeScore : public exception
+{
+private:
+    int score; // To hold test score
+
+public:
+    // Constructor
+    NegativeScore(int);
+
+    // Accessor function
+    int getScore();
+};
+#endif
+
+//NegativeScore.cpp
+#include "NegativeScore.h"
+
+// The constructor accepts an interger as an argument 
+
+NegativeScore::NegativeScore(int s) : exception()
+{
+    score = s;
+}
+
+// getScore function returns the testscore 
+int NegativeScore::getScore()
+{
+    return score;
+}
+
+//LargeScore.h
+#ifndef LARGESCORE_H
+#define LARGESCORE_H
+#include <exception>
+using namespace std;
+
+class LargeScore : public exception
+{
+private:
+    int score; // To hold test score
+
+public:
+    // Constructor
+    LargeScore(int);
+
+    // Accessor function
+    int getScore();
+};
+#endif
+
+//LargeScore.cpp
+#include "LargeScore.h"
+
+// The constructor accepts an interger as an argument 
+LargeScore::LargeScore(int s) : exception()
+{
+    score = s;
+}
+
+// getScore function returns the test score 
+int LargeScore::getScore()
+{
+    return score;
+}
+
+
+//main.cpp
+
+#include <iostream>
+#include "TestScore.h"
+#include "NegativeScore.h"
+#include "LargeScore.h"
+using namespace std;
+
+int main()
+{
+    int score[2]; // Array to hold scores
+    // Get test scores from user
+    cout << "Enter " << 2 << " test scores ";
+    for (int i = 0; i < 2; i++)
+    {
+        cin >> score[i];
+    }
+    // Check for exceptions
+    try
+    {
+        TestScore test1(score);
+        cout << "The average of the scores is " << test1.getAverage() << endl; // This returns a wrong number
+    }
+    catch (NegativeScore &e) // TestScores has no member NegativeScore
+    {
+        cout << "Exception Thrown: " << e.getScore() << " is an negative value.\n";
+    }
+    catch (LargeScore &e) // TestScores has no member NegativeScore
+    {
+        cout << "Exception Thrown: " << e.getScore() << " is a value larger than 100.\n";
+    }
+    return 0;
+}
