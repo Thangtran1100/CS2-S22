@@ -21,7 +21,10 @@ int main()
 
     d1 = digitize(35231);
 
-    std::cout << d1 << std::endl;
+    for(const int &i : d1)
+    {
+      std::cout << i << " ";
+    }
 
     return 0;
 }
