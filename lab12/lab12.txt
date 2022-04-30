@@ -1,0 +1,48 @@
+/*
+    Programmer: Dai Tran
+    
+    Program Name: lab12.cpp
+
+    Date: 04/30/2022
+
+    Version: 4.5
+
+    Description:    Write a program that demonstrates a recursive function for counting
+                    the number of times a character appears in a string.
+
+                    You can try your code with string str = "abcddddefdddd";
+
+                    Add comments and version control.         
+*/
+
+//main.cpp
+#include <iostream>
+#include <string>
+
+int counting(std::string st, char c)
+{
+    if (st.length() == 0)
+    {
+        //return 0 if the string is empty
+        return 0;
+    }
+    else if (st.at(0) == c)
+    {
+        //return 1 + recursive function with substring from position 1
+        return 1 + counting(st.substr(1), c);
+    }
+    else
+    {
+        //return recursive function with substring from position 1
+        return counting(st.substr(1), c);
+    }
+}
+
+int main()
+{
+    std::string st = "abcddddefdddd";
+
+    std::cout << counting(st, 'd') << std::endl;
+
+    return 0;
+}// end file
