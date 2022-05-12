@@ -1,0 +1,226 @@
+/*
+    Programmer: Dai Tran
+    
+    Program Name: hw13.cpp
+
+    Date: 05/11/2022
+
+    Version: 5.8
+
+    Description:    Design a PartInfo class that holds the following parts information:
+
+                    PartID Number:   an integer
+
+                    PartName:        a string
+
+                    Then, create a binary tree whose nodes contain an object of the PartInfo class. 
+                    The nodes should be sorted on the PartID number. 
+                    Test the binary tree by inserting nodes with the following information.
+
+                    PartID Number       PartName
+
+                    1042                Motherboard
+
+                    1078                CPU
+
+                    2508                Power Supply
+
+                    3780                Modem
+
+                    1038                RAM
+
+                    1287                Graphic Card
+
+                    1920                Hard Disk
+
+                    4239                USB Port
+
+                    Your program should allow the user to enter a PartID number, then search the tree for the number. 
+                    If the number is found, it should display the part’s name. 
+                    If the node is not found, it should display “part is not found.”  
+*/
+
+//info.h
+// class PartInfo
+#ifndef INFO_H
+#define INFO_H
+
+#include<iostream>
+#include<string>
+
+class PartInfo
+{
+private:
+    struct PartNode
+    {
+        int id;
+        std::string name;
+
+        PartNode *left;
+        PartNode *right;
+    };
+
+    PartNode *root;
+
+    // Private member functions
+    void insert(PartNode *&, PartNode *&);
+    void displayInOrder(PartNode *) const;
+    void displayPreOrder(PartNode *) const;
+    void displayPostOrder(PartNode *) const;
+public:
+    PartInfo() // default constructor
+    {
+        root = nullptr;
+    }
+
+    PartInfo(int partID, std::string partName) // Constructor
+    {
+        root = new PartNode;
+        root->id = partID;
+        root->name = partName;
+        root->left = nullptr;
+        root->right = nullptr;
+    }
+
+    // Binary Tree Operation
+    void insertNode(int, std::string);
+    std::string searchPart(int);
+
+    //Display function
+    void displayInOrder() const
+    {
+        displayInOrder(root);
+    }
+    
+};
+
+
+#endif
+//end file
+
+//info.cpp
+#include "info.h"
+
+//Insert function
+void PartInfo::insert(PartNode *&nodeptr, PartNode *&newNode)
+{
+    //If it is at the end of branch and insertion point has been found
+    if(nodeptr == nullptr)
+    {
+        nodeptr = newNode; // insert id
+    }
+    else if(newNode->id < nodeptr->id)
+    {
+        insert(nodeptr->left, newNode);
+    }
+    else
+    {
+        insert(nodeptr->right, newNode);
+    }
+}
+
+//Searching a Tree for a partID
+std::string PartInfo::searchPart(int partID)
+{
+    PartNode *nodeptr = root;
+    while(nodeptr) //nodeptr is pointing to a Node
+    {
+        if(nodeptr->id == partID)
+        {
+            return nodeptr->name;
+        }
+        
+        if(partID < nodeptr->id)
+        {
+            nodeptr = nodeptr->left;
+        }
+        else
+        {
+            nodeptr = nodeptr->right;
+        }
+    }
+
+    return "Part is not found";
+}
+
+
+//Inserting a Node in BST
+void PartInfo::insertNode(int partID, std::string partName)
+{
+    PartNode *newNode = nullptr;
+    newNode = new PartNode;
+    newNode->id = partID;
+    newNode->name = partName;
+    newNode->left = nullptr;
+    newNode->right = nullptr;
+    insert(root, newNode);
+}
+
+//The display inorder function Left-Root-Right
+void PartInfo::displayInOrder(PartNode *nodeptr) const
+{
+    if(nodeptr)
+    {
+        displayInOrder(nodeptr->left);
+        std::cout << nodeptr->id << ": " << nodeptr->name << std::endl;
+        displayInOrder(nodeptr->right);
+    }
+}
+
+//The display preorder function Root-Left-Right
+void PartInfo::displayPreOrder(PartNode *nodeptr) const
+{
+    if(nodeptr)
+    {
+        std::cout << nodeptr->id << ": " << nodeptr->name << std::endl;
+        displayPreOrder(nodeptr->left);
+        displayPreOrder(nodeptr->right);
+    }
+}
+
+//The display postorder function Left-Right-Root
+void PartInfo::displayPostOrder(PartNode *nodeptr) const
+{
+    if(nodeptr)
+    {
+        displayPostOrder(nodeptr->left);
+        displayPostOrder(nodeptr->right);
+        std::cout << nodeptr->id << ": " << nodeptr->name << std::endl;
+    }
+}
+//end file
+
+//main.cpp
+#include "info.h"
+
+int main()
+{
+    PartInfo root(1042, "Motherboard");
+
+    root.insertNode(1078, "CPU"); 
+
+    root.insertNode(2508, "Power Supply"); 
+
+    root.insertNode(3780, "Modem");
+
+    root.insertNode(1038, "RAM"); 
+
+    root.insertNode(1287, "Graphic Card");
+
+    root.insertNode(1920, "Hard Disk");
+
+    root.insertNode(4239, "USB Port");
+
+    root.displayInOrder();
+
+    int id;
+
+    std::cout << "Enter the partID number to search: ";
+
+    std::cin >> id;
+
+    std::cout << root.searchPart(id) << std::endl;
+    
+    return 0;
+}
+//end file
