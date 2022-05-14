@@ -4,46 +4,46 @@
 using namespace std;
 
 //Function that checks whether string passed is a Palindrome or not
-bool isPalindrome(string str, int startPos, int endPos)
+bool isPalindrome(string str, int start, int end)
 {
     //Base Condition
-    if(startPos >= endPos)
+    if(end <= start)
     {
         return true;
     }
 
     //If current character is not an alphabet
-    if(!isalpha(str[startPos]))
+    if(!isalpha(str[start]))
     {
         //Updating start position
-        startPos += 1;
+        start += 1;
 
         //Recursive call
-        return isPalindrome(str, startPos++, endPos);
+        return isPalindrome(str, start++, end);
     }
 
     //If current character is not an alphabet
-    if(!isalpha(str[endPos]))
+    if(!isalpha(str[end]))
     {
         //Updating end position
-        endPos -= 1;
+        end -= 1;
 
         //Recursive call
-        return isPalindrome(str, startPos, endPos--);
+        return isPalindrome(str, start, end--);
     }
 
     //If the characters are not same
-    if(tolower(str[startPos]) != tolower(str[endPos]))
+    if(tolower(str[start]) != tolower(str[end]))
     {
         return false;
     }
 
     //Updating positions
-    startPos = startPos + 1;
-    endPos = endPos - 1;
+    start = start + 1;
+    end = end - 1;
 
     //Recursive call
-    return isPalindrome(str, startPos, endPos);
+    return isPalindrome(str, start, end);
 }
 
 
@@ -52,20 +52,22 @@ int main()
 {
     string str;
 
-    //Reading a string from user
-    cout << "\n\n Enter a string: ";
+    //Get input from user
+    cout << "Enter a string: ";
     getline(cin, str);
 
-    //Checking for palindrome
+    //Checking palindrome
     if(isPalindrome(str, 0, strlen(str.c_str())-1))
     {
-        cout << "\n Is a Palindrome!!!! \n";
+        cout << "\nPalindrome\n";
     }
     else
     {
-        cout << "\n Is not a Palindrome!!!! \n";
+        cout << "\nNot Palindrome\n";
     }
 
-    cout << "\n\n";
     return 0;
 }
+
+
+

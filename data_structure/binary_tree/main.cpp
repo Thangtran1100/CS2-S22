@@ -1,16 +1,16 @@
 #include "tree.h"
 
+
 int main()
 {
-    Node *root = NULL, *node;
+    IntBinaryTree tree(5);
 
-    node->insert(root, 1);
-    node->insert(root, 2);
-    node->insert(root, 3);
-    node->insert(root, 4);
-    node->insert(root, 5);
+    tree.insertNode(3);
+    tree.insertNode(12);
 
-    node->printPreOrder(root);
+    tree.displayInOrder();
+    tree.countNodes();
+    tree.countLeafNode();
 
     return 0;
 }

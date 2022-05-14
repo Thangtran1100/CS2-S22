@@ -1,36 +1,84 @@
-#ifndef TREE_H
-#define TREE_H
+// class IntBinaryTree
+#ifndef INTBINARYTREE_H
+#define INTBINARYTREE_H
 
 #include<iostream>
-
-class Node
+#include<math.h>
+class IntBinaryTree
 {
 private:
-    int data;
+    struct TreeNode
+    {
+        int data;
+        TreeNode *left;
+        TreeNode *right;
+    };
 
-    Node *left;
+    TreeNode *root;
 
-    Node *right;
-
-    Node *root;
+    // Private member functions
+    void insert(TreeNode *&, TreeNode *&);
+    void destroySubTree(TreeNode *);
+    void deleteNode(int, TreeNode *&);
+    void makeDeletion(TreeNode *&);
+    void displayInOrder(TreeNode *) const;
+    void displayPreOrder(TreeNode *) const;
+    void displayPostOrder(TreeNode *) const;
+    int countNode(TreeNode *);
+    int countLeaf(TreeNode *);
 public:
-    Node()
+    IntBinaryTree() // default constructor
     {
-        data = 0;
-
-        left = right = NULL;
+        root = nullptr;
     }
 
-    Node(int value)
+    IntBinaryTree(int value) // Constructor
     {
-        data = value;
-
-        left = right = NULL;
+        root = new TreeNode;
+        root->data = value;
+        root->left = nullptr;
+        root->right = nullptr;
     }
 
-    void insert(Node*, const int);
-    void printPreOrder(Node *);
-    void printPostOrder(Node *);
+    // Destructor
+    ~IntBinaryTree()
+    {
+        destroySubTree(root);
+    }
+
+    // Binary Tree Operation
+    void insertNode(int);
+    bool searchNode(int);
+    void remove(int);
+
+    void displayInOrder() const
+    {
+        displayInOrder(root);
+    }
+
+    void displayPreOrder() const
+    {
+        displayPreOrder(root);
+    }
+
+    void displayPostOrder() const
+    {
+        displayPostOrder(root);
+    }
+
+    void countNodes()
+    {
+        std::cout << "Number of Nodes: ";
+        std::cout << countNode(root) << std::endl;
+    }
+
+    void countLeafNode()
+    {
+        std::cout << "Number of leaf nodes: ";
+        std::cout << countLeaf(root) << std::endl;
+    }
+    
 };
+
 
 #endif
