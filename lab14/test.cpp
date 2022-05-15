@@ -1,20 +1,3 @@
-/*
-    Programmer: Dai Tran
-    
-    Program Name: lab14.cpp
-
-    Date: 05/14/2022
-
-    Version: 5.8
-
-    Description:    Write an insert function and passing the values from the user and insert them to Max. Heap Tree. 
-                    You can use 2*k+1 (left child), 2*K+2 (right child), and (K-1)/2 (parent) formulas 
-                    if you don't leave blank the first array element to insert and check your indexes. 
-                    For each new value the Max Tree properties should hold. You can write Heapify function to keep the properties of Max Heap.
-
-                    Test your program with some values. 
-*/
-
 #include <iostream>
 #include <vector>
 
